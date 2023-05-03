@@ -11,7 +11,7 @@ let rows1;
 let rows2;
 
 beforeEach(() => {
-  const options = { encoding: 'utf8', cwd: path.join(__dirname, '..') };
+  const options = { encoding: 'utf8', cwd: path.join(__dirname) };
 
   const result1 = execFileSync(
     'node index.js',
