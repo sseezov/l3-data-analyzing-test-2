@@ -27,7 +27,9 @@ const normalizedData = collection.map((item) =>
 );
 
 // Step 2
-const strengthOrder = _.sortBy(normalizedData, [1]);
+const strengthOrder = _.sortBy(normalizedData, (creature) =>
+  Number(creature[1])
+);
 const strongestUnit = strengthOrder[strengthOrder.length - 1];
 const secondStrongestUnit = strengthOrder[strengthOrder.length - 2];
 const tenStrongest = strongestUnit[6] * 10;
@@ -35,5 +37,19 @@ const twentySecondStrongest = secondStrongestUnit[6] * 20;
 
 console.log(`Стоимость найма 10 самых сильных существ: ${tenStrongest}
 Стоимость найма 20 вторых по силе существ: ${twentySecondStrongest}`);
+
+// Step 3
+
+const maxWeightCreature = _.maxBy(normalizedData, (creature) =>
+  Number(creature[5])
+);
+
+const minWeightCreature = _.minBy(normalizedData, (creature) =>
+  Number(creature[5])
+);
+
+const priceSquad = Number(maxWeightCreature[6]) + Number(minWeightCreature[6]);
+
+console.log(`Стоимость отряда самых толстых и худых: ${priceSquad}`);
 
 // END
