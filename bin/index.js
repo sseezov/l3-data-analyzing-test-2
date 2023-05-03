@@ -17,7 +17,6 @@ const content = fs.readFileSync(path.join(
 // BEGIN
 const rows = content.split('\r\n')
 const data = rows.slice(1).map((row) => row.split('|').slice(1, 8).map(element => element.trim()))
-console.log(data)
 console.log(`Количество рядов:`, data.length)
 
 const strengths = data.map((row) => row[1])
@@ -42,8 +41,8 @@ console.log(`цена за 20 вторых по силе созданий: ${Num
 const fatIndex = weights.indexOf(String(maxWeight))
 const thinIndex = weights.indexOf(String(minWeight))
 
-console.log(`цена за отряд самых толстых: ${Number(troops[fatIndex]) * Number(prices[fatIndex])} `)
-console.log(`цена за отряд самых тонких: ${Number(troops[thinIndex]) * Number(prices[thinIndex])} `)
+console.log(`цена за отряд самых толстых: ${Number(troops[fatIndex]) * Number(prices[fatIndex])}`)
+console.log(`цена за отряд самых тонких: ${Number(troops[thinIndex]) * Number(prices[thinIndex])}`)
 
 const priceFor1Strength = data.map((row) => {
   const index = data.indexOf(row)

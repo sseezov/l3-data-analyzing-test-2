@@ -11,17 +11,17 @@ let rows1;
 let rows2;
 
 beforeEach(() => {
-  const options = { encoding: 'utf8', cwd: path.join(__dirname) };
+  const options = { encoding: 'utf8', cwd: path.join(__dirname, '..') };
 
   const result1 = execFileSync(
-    'node index.js',
+    'bin/index.js',
     ['__fixtures__/table1.csv'],
     options,
   );
   rows1 = result1.trim().split('\n')
 
   const result2 = execFileSync(
-    'node index.js',
+    'bin/index.js',
     ['__fixtures__/table2.csv'],
     options,
   );
