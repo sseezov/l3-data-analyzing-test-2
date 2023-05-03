@@ -16,6 +16,7 @@ const content = fs.readFileSync(path.join(
 // BEGIN
 const rows = content.split('\r\n')
 const data = rows.slice(1).map((row) => row.split('|').slice(1, 8).map(element => element.trim()))
+console.log(data)
 console.log(`Количество рядов:`, data.length)
 
 const strengths = data.map((row) => row[1])

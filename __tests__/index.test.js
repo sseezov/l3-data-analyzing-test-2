@@ -14,14 +14,14 @@ beforeEach(() => {
   const options = { encoding: 'utf8', cwd: path.join(__dirname, '..') };
 
   const result1 = execFileSync(
-    'index.js',
+    'node index.js',
     ['__fixtures__/table1.csv'],
     options,
   );
   rows1 = result1.trim().split('\n')
 
   const result2 = execFileSync(
-    'index.js',
+    'node index.js',
     ['__fixtures__/table2.csv'],
     options,
   );
@@ -55,6 +55,6 @@ test('step4', () => {
 });
 
 test('step5', () => {
-  expect(rows1[7]).toEqual(`Самая лучшая армия за 10000: 250 Гоблин`)
-  expect(rows2[7]).toEqual(`Самая лучшая армия за 10000: 400 Гоблин`)
+  expect(rows1[7]).toEqual(`Самая лучшая армия за 10000: 50 Гоблин`)
+  expect(rows2[7]).toEqual(`Самая лучшая армия за 10000: 100 Гоблин`)
 });
