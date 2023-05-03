@@ -20,20 +20,20 @@ const data = rows.slice(1).map((row) => row.split('|').slice(1, 8).map(element =
 console.log(`Количество рядов:`, data.length)
 
 const strengths = data.map((row) => row[1])
-const strengths2 = [...strengths]
 const creatures = data.map(row => row[0])
 const prices = data.map(row => row[6])
 const weights = data.map(row => row[5])
 const troops = data.map(row => row[3])
 
 const maxStrength = Math.max(...strengths);
-const maxStrength2 = Math.max(...strengths2);
 const maxWeight = Math.max(...weights);
 const minWeight = Math.min(...weights);
 
 const maxStrengthIndex = strengths.indexOf(String(maxStrength));
+
+const strengths2 = strengths.slice(0, maxStrengthIndex).concat(strengths.slice(maxStrengthIndex+1))
+const maxStrength2 = Math.max(...strengths2);
 const maxStrengthIndex2 = strengths2.indexOf(String(maxStrength2));
-strengths2.splice(maxStrengthIndex, 1, 0)
 
 console.log(`цена за 10 сильнейших созданий: ${Number(prices[maxStrengthIndex]) * 10}`)
 console.log(`цена за 20 вторых по силе созданий: ${Number(prices[maxStrengthIndex2]) * 20}`)
