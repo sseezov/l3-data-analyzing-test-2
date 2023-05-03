@@ -53,10 +53,11 @@ const bestPrice = Math.min(...priceFor1Strength)
 const worstPrice = Math.max(...priceFor1Strength)
 const bestPriceCreature = creatures[priceFor1Strength.indexOf(bestPrice)]
 const worstPriceCreature = creatures[priceFor1Strength.indexOf(worstPrice)]
+const bestPriceForCreature = prices[priceFor1Strength.indexOf(bestPrice)]
 
 console.log(`Самый выгодный юнит: ${bestPriceCreature}`)
 console.log(`Самый невыгодный юнит: ${worstPriceCreature}`)
 
-const quantityOfCheapestCreatures = 10000/bestPrice;
+const quantityOfCheapestCreatures = 10000 / bestPriceForCreature;
 console.log(`Самая лучшая армия за 10000: ${quantityOfCheapestCreatures} ${bestPriceCreature}`)
 // END
