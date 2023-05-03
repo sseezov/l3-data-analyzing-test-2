@@ -7,10 +7,8 @@ import fs from 'fs';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-
 const fileName = process.argv[2];
-const content = fs.readFileSync(path.join(
-  __dirname,
+const content = fs.readFileSync(path.join(__dirname,
   fileName
 ), 'utf-8');
 
