@@ -14,7 +14,6 @@ const content = fs.readFileSync(path.join(
 ), 'utf-8');
 
 // BEGIN
-
 const rows = content.split('\r\n')
 const data = rows.slice(1).map((row) => row.split('|').slice(1, 8).map(element => element.trim()))
 console.log(`Количество рядов:`, data.length)
