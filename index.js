@@ -39,7 +39,6 @@ console.log(`Стоимость найма 10 самых сильных суще
 Стоимость найма 20 вторых по силе существ: ${twentySecondStrongest}`);
 
 // Step 3
-
 const maxWeightCreature = _.maxBy(normalizedData, (creature) =>
   Number(creature[5])
 );
@@ -52,4 +51,27 @@ const priceSquad = Number(maxWeightCreature[6]) + Number(minWeightCreature[6]);
 
 console.log(`Стоимость отряда самых толстых и худых: ${priceSquad}`);
 
+// Step 4
+const strengthAndPrice = _.sortBy(normalizedData, (creature) => {
+  return Number(creature[1]) / Number(creature[6]);
+});
+
+const mostProfitableUnit = strengthAndPrice[strengthAndPrice.length - 1];
+const leastProfitableUnit = strengthAndPrice[0];
+
+console.log(`Самый выгодный юнит по соотношению цены и силы: ${mostProfitableUnit[0]}
+Самый невыгодный юнит по соотношению цены и силы: ${leastProfitableUnit[0]}`);
+
+// Step 5
+const money = 10000;
+const strongestOrder = _.sortBy(
+  normalizedData,
+  (creature) => (money / Number(creature[6])) * creature[1]
+);
+
+const strongestArmy = strongestOrder[strongestOrder.length - 1];
+const unitsCount = money / strongestArmy[6];
+console.log(
+  `Самый сильная армия за 10000: ${unitsCount} ${strongestArmy[0]}ов`
+);
 // END
