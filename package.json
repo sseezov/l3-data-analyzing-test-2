@@ -11,7 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "lodash": "^4.17.21",
-    "make": "^0.8.1"
+    "make": "^0.8.1",
+    "react-scripts": "^5.0.1"
   },
   "devDependencies": {
     "jest": "^29.5.0"
