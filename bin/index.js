@@ -44,5 +44,24 @@ console.log(`цена за 10 сильнейших созданий: ${tenStrong
   console.log(`цена за отряд самых тонких: ${someWeightUnit[someWeightUnit.length - 1][3] * someWeightUnit[someWeightUnit.length - 1][6]}`);
   
   //step 4
-  
+  const strengthOfPrice = _.sortBy(data, (creature) => {
+    return Number(creature[1] / Number(creature[6]))
+  }) 
+  const mostProfitableUnit = strengthOfPrice[strengthOfPrice.length - 1];
+const leastProfitableUnit = strengthOfPrice[0];
+
+console.log(`Самый выгодный юнит:${mostProfitableUnit[0]}`)
+console.log(`Самый невыгодный юнит:${leastProfitableUnit[0]}`);
+
+  //step 5
+const money = 10000;
+const strongestIndex = _.sortBy(
+  data,
+  (creature) => (money / Number(creature[6])) * creature[1]  
+);
+
+const strongestArmy = strongestIndex[strengthOrder.length - 1];
+const unitCount = money / strongestArmy[6];
+
+console.log(`Самая лучшая армия за 10000: ${unitCount}${strongestArmy[0]}`);
 // END 
