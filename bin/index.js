@@ -1,63 +1,67 @@
 #!/usr/bin/env node
-
 import { fileURLToPath } from "node:url";
+
 import path from "node:path";
 import fs from 'fs';
+import _ from 'lodash'
+import { workerData } from "node:worker_threads";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
 
 const fileName = process.argv[2];
 const content = fs.readFileSync(path.join(
   __dirname,
   '..',
   fileName
-), 'utf-8');
+  ), 'utf-8');
 
 // BEGIN
-const rows = content.split('\r\n')
-const data = rows.slice(1).map((row) => row.split('|').slice(1, 8).map(element => element.trim()))
-console.log(`Количество рядов:`, data.length)
+//Step 1 
 
-const strengths = data.map((row) => row[1])
-const creatures = data.map(row => row[0])
-const prices = data.map(row => row[6])
-const weights = data.map(row => row[5])
-const troops = data.map(row => row[3])
+const data = content.split('\n').map((row) => row.split('|').slice(1, -1)).slice(1);
+const names = data.map((row) => row[0]);
+console.log(`Количество рядов: ${names.length}`);
 
-const maxStrength = Math.max(...strengths);
-const maxWeight = Math.max(...weights);
-const minWeight = Math.min(...weights);
 
-const maxStrengthIndex = strengths.indexOf(String(maxStrength));
+// Step 2
+const strengthOrder = _.sortBy(data, (creature) =>
+  Number(creature[1])
+);
+const strongestUnit = strengthOrder[strengthOrder.length - 1];
+const secondStrongestUnit = strengthOrder[strengthOrder.length - 2];
+const tenStrongest = strongestUnit[6] * 10;
+const twentySecondStrongest = secondStrongestUnit[6] * 20;
 
-const strengths2 = strengths.slice(0, maxStrengthIndex).concat(strengths.slice(maxStrengthIndex+1))
-const maxStrength2 = Math.max(...strengths2);
-const maxStrengthIndex2 = strengths2.indexOf(String(maxStrength2));
+console.log(`цена за 10 сильнейших созданий: ${tenStrongest}
+цена за 20 вторых по силе созданий: ${twentySecondStrongest}`);
 
-console.log(`цена за 10 сильнейших созданий: ${Number(prices[maxStrengthIndex]) * 10}`)
-console.log(`цена за 20 вторых по силе созданий: ${Number(prices[maxStrengthIndex2]) * 20}`)
 
-const fatIndex = weights.indexOf(String(maxWeight))
-const thinIndex = weights.indexOf(String(minWeight))
+  //Step 3
+  const someWeightUnit = data.sort((a, b) => b[5] - a[5]);
+  console.log(`цена за отряд самых толстых: ${someWeightUnit[0][3] * someWeightUnit[0][6]}`);
+  console.log(`цена за отряд самых тонких: ${someWeightUnit[someWeightUnit.length - 1][3] * someWeightUnit[someWeightUnit.length - 1][6]}`);
+  
+  //step 4
+  const strengthOfPrice = _.sortBy(data, (creature) => {
+    return Number(creature[1] / Number(creature[6]))
+  }) 
+  const mostProfitableUnit = strengthOfPrice[strengthOfPrice.length - 1];
+const leastProfitableUnit = strengthOfPrice[0];
 
-console.log(`цена за отряд самых толстых: ${Number(troops[fatIndex]) * Number(prices[fatIndex])}`)
-console.log(`цена за отряд самых тонких: ${Number(troops[thinIndex]) * Number(prices[thinIndex])}`)
+console.log(`Самый выгодный юнит:${mostProfitableUnit[0]}`)
+console.log(`Самый невыгодный юнит:${leastProfitableUnit[0]}`);
 
-const priceFor1Strength = data.map((row) => {
-  const index = data.indexOf(row)
-  return Math.floor(Number(prices[index]) / Number(strengths[index]))
-})
+  //step 5
+const money = 10000;
+const strongestIndex = _.sortBy(
+  data,
+  (creature) => (money / Number(creature[6])) * creature[1]  
+);
 
-const bestPrice = Math.min(...priceFor1Strength)
-const worstPrice = Math.max(...priceFor1Strength)
-const bestPriceCreature = creatures[priceFor1Strength.indexOf(bestPrice)]
-const worstPriceCreature = creatures[priceFor1Strength.indexOf(worstPrice)]
-const bestPriceForCreature = prices[priceFor1Strength.indexOf(bestPrice)]
+const strongestArmy = strongestIndex[strengthOrder.length - 1];
+const unitCount = money / strongestArmy[6];
 
-console.log(`Самый выгодный юнит: ${bestPriceCreature}`)
-console.log(`Самый невыгодный юнит: ${worstPriceCreature}`)
-
-const quantityOfCheapestCreatures = 10000 / bestPriceForCreature;
-console.log(`Самая лучшая армия за 10000: ${quantityOfCheapestCreatures} ${bestPriceCreature}`)
-// END
+console.log(`Самая лучшая армия за 10000: ${unitCount}${strongestArmy[0]}`);
+// END 
