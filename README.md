@@ -10,4 +10,4 @@
 
 
 
-Пример запуска: node index.js table.csv
+Пример запуска: node bin/index.js __fixtures__/table1.csv
